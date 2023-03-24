@@ -5,6 +5,7 @@
 #include "OnlineSubsystem.h"
 #include "OnlineSessionSettings.h"
 #include "Interfaces/VoiceInterface.h"
+#include "Interfaces/OnlineIdentityInterface.h"
 
 UMultiplayerSessionSubsystem::UMultiplayerSessionSubsystem():
 CreateSessionCompleteDelegate(FOnCreateSessionCompleteDelegate::CreateUObject(this, &ThisClass::OnCreateSessionComplete)),
@@ -19,7 +20,6 @@ StartSessionCompleteDelegate(FOnStartSessionCompleteDelegate::CreateUObject(this
 	{
 		SessionInterface = OnlineSubsystem->GetSessionInterface();
 	}
-
 }
 
 void UMultiplayerSessionSubsystem::CreateSession(int32 NumPublicConnections, FString MatchType)

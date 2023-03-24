@@ -1,0 +1,82 @@
+Enable OnlineSubsystemSteam in Plugin Setting in Editor
+
+---DefaultEngine.ini
+[/Script/Engine.Engine]
+
+//Add
+!NetDriverDefinitions=ClearArray
+; Uncomment the next line if you are using the Null Subsystem
+;-NetDriverDefinitions=(DefName="GameNetDriver",DriverClassName="/Script/OnlineSubsystemUtils.IpNetDriver",DriverClassNameFallback="/Script/OnlineSubsystemUtils.IpNetDriver")
+; Uncomment the next line if you are using the Steam Subsystem
++NetDriverDefinitions=(DefName="GameNetDriver",DriverClassName="OnlineSubsystemSteam.SteamNetDriver",DriverClassNameFallback="OnlineSubsystemUtils.IpNetDriver")
+
+//Add At End
+[OnlineSubsystem]
+PollingIntervalInMs=20  
+; Uncomment the following line to use the Null Subsystem
+;DefaultPlatformService=Null
+; Uncomment the following lines to use the Steam Subsystem
+DefaultPlatformService=Steam  
+VoiceNotificationDelta=0.2  
+
+[OnlineSubsystemSteam]
+bEnabled=true  
+SteamDevAppId=480  
+SteamAppId=480  
+GameServerQueryPort=27015  
+bRelaunchInSteam=false  
+GameVersion=1.0.0.0  
+bVACEnabled=1  
+bAllowP2PPacketRelay=true  
+P2PConnectionTimeout=90  
+; This is to prevent subsystem from reading other achievements that may be defined in parent .ini
+Achievement_0_Id=""
+
+[/Script/OnlineSubsystemSteam.SteamNetDriver]
+NetConnectionClassName="OnlineSubsystemSteam.SteamNetConnection"
+
+---MyGame/Source/MyGame/MyGame.Build.cs
+
+//Add and build
+PublicDependencyModuleNames.AddRange(new string[] {
+            "OnlineSubsystem",
+            "OnlineSubsystemUtils",
+            "Steamworks"
+        });
+
+        DynamicallyLoadedModuleNames.Add("OnlineSubsystemSteam");
+
+---Code .h
+UFUNCTION(BlueprintPure, Category = "Steam")
+static FString GetSteamID64();
+
+UFUNCTION(BlueprintPure, Category = "Steam")
+static FString GetSteamID32();
+
+---Code .cpp
+
+//Include this after the first .h
+#include "ThirdParty/Steamworks/Steamv142/sdk/public/steam/steam_api.h"
+
+//Add and change UGetSteamID to what you called the class
+FString UGetSteamID::GetSteamID64()
+{
+	FString outID = "";
+	CSteamID steamID = SteamUser()->GetSteamID();
+	uint64 intID = steamID.ConvertToUint64();
+
+	outID = FString::Printf(TEXT("%lld"), intID);
+
+	return outID;
+}
+
+FString UGetSteamID::GetSteamID32()
+{
+	FString outID = "";
+	CSteamID steamID = SteamUser()->GetSteamID();
+	uint64 intID = steamID.ConvertToUint64();
+
+	outID = FString::FromInt(intID);
+
+	return outID;
+}

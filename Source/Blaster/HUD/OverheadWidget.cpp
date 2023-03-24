@@ -41,8 +41,9 @@ void UOverheadWidget::ShowPlayerNetRole(APawn* InPawn)
 	SetDisplayText(LocalRoleString);
 
 	// Get Player Name / crash if same computer
-	//LocalRoleString = InPawn->GetPlayerState()->GetPlayerName();
-	//SetDisplayText(LocalRoleString);
+	LocalRoleString = InPawn->GetPlayerState()->GetPlayerName();
+	SetDisplayText(LocalRoleString);
+
 }
 
 void UOverheadWidget::OnLevelRemovedFromWorld(ULevel* InLevel, UWorld* InWorld)

@@ -16,5 +16,13 @@ class BLASTER_API ALobbyGameMode : public AGameMode
 	
 	public:
 
+	ALobbyGameMode();
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Lobby")
+	FString GameLevelName;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Lobby")
+	int32 MaximumPlayerNumber;
+
 	virtual void PostLogin(APlayerController* NewPlayer) override;
 };

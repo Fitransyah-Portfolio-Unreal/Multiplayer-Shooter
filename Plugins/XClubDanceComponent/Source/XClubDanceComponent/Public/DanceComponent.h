@@ -6,22 +6,23 @@
 #include "Components/ActorComponent.h"
 #include "DanceComponent.generated.h"
 
-
+// This is component to make character dance
+// Add this component in ACharacter blueprint
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class XCLUBDANCECOMPONENT_API UDanceComponent : public UActorComponent
 {
 	GENERATED_BODY()
 
 public:	
-	// Sets default values for this component's properties
+	
 	UDanceComponent();
 
 protected:
-	// Called when the game starts
+	
 	virtual void BeginPlay() override;
 
 public:	
-	// Called every frame
+	
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Dance Montages Map")

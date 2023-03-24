@@ -7,14 +7,12 @@
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Animation/AnimInstance.h"
 
-// Sets default values for this component's properties
+
 UDanceComponent::UDanceComponent()
 {
-	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
-	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = true;
 
-	// Get Skeletal Mesh
+	// Get Owner Character Skeletal Mesh and Anim Instance
 	AActor* Owner = GetOwner();
 	if (Owner)
 	{
@@ -22,38 +20,32 @@ UDanceComponent::UDanceComponent()
 		OwnerSkeletalMesh = OwnerCharacter->GetMesh();
 		OwnerAnimInstance = OwnerSkeletalMesh->GetAnimInstance();
 	}
-
-
-	// ...
 }
 
 
-// Called when the game starts
+
 void UDanceComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	
-	// ...
-	
+		
 }
 
 
-// Called every frame
+
 void UDanceComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	FString CharVelocity = OwnerCharacter->GetCharacterMovement()->Velocity.ToCompactString();
-	
-	UE_LOG(LogTemp, Display, TEXT(" Message here : %s"), *CharVelocity);
+	// FString CharVelocity = OwnerCharacter->GetCharacterMovement()->Velocity.ToCompactString();
+	// UE_LOG(LogTemp, Display, TEXT(" Message here : %s"), *CharVelocity);
 
 	if (OwnerCharacter->GetCharacterMovement()->Velocity != FVector::Zero())
 	{
 		OwnerAnimInstance->StopAllMontages(0.25f);
 	}
 
-	// ...
 }
 
+// Call this on blueprint for easier use
 void UDanceComponent::Dance(FString MontageSelected)
 {
 	if (OwnerCharacter->GetCharacterMovement()->IsFalling())
@@ -61,12 +53,10 @@ void UDanceComponent::Dance(FString MontageSelected)
 		return;
 	}
 
-
 	if (OwnerAnimInstance && DanceMontageMap.Num() > 0 && DanceMontageMap.Contains(MontageSelected))
 	{
 		OwnerAnimInstance->Montage_Play(DanceMontageMap[MontageSelected], 1.0f);
 	}
-
 
 }
 

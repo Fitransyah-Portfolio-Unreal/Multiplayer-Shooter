@@ -18,6 +18,7 @@ class BLASTER_API UOverheadWidget : public UUserWidget
 	UPROPERTY(meta = (BindWidget))
 	class UTextBlock* DisplayText;
 
+	UFUNCTION(BlueprintCallable)
 	void SetDisplayText(FString TextToDisplay);
 
 	UFUNCTION(BlueprintCallable)

@@ -9,6 +9,12 @@
 #include "GameFramework/Actor.h"
 #include "Blaster/Character/BlasterCharacter.h"
 
+ALobbyGameMode::ALobbyGameMode()
+{
+	GameLevelName = "";
+	MaximumPlayerNumber = -1;
+}
+
 void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 {
 	Super::PostLogin(NewPlayer);
@@ -24,13 +30,14 @@ void ALobbyGameMode::PostLogin(APlayerController* NewPlayer)
 
 		// Maximum player action
 		int32 NumberOfPlayer = GameState.Get()->PlayerArray.Num();
-		if (NumberOfPlayer == 2)
+		if (NumberOfPlayer == MaximumPlayerNumber)
 		{
 			UWorld* World = GetWorld();
 			if (World)
 			{
 				bUseSeamlessTravel = true;
-				World->ServerTravel(FString("/Game/Maps/Windmills?listen"));
+				FString Url = FString::Printf(TEXT("/Game/Maps/%s?listen"), *GameLevelName);
+				World->ServerTravel(Url);
 			}
 		}
 
