@@ -27,11 +27,43 @@ protected:
 
 	virtual void BeginPlay() override;
 
+	void SetAiming(bool bIsAiming);
+
+	//RPC
+	UFUNCTION(Server, Reliable)
+	void ServerSetAiming(bool bIsAiming);
+
+	UFUNCTION()
+	void OnRep_EquippedWeapon();
+
+	void FireButtonPressed(bool bPressed);
+
+	// RPC
+	UFUNCTION(Server, Reliable)
+	void ServerFire();
+
+	// RPC
+	UFUNCTION(NetMulticast, Reliable)
+	void MulticastFire();
+
+	void TraceUnderCrosshair(FHitResult& TraceHitResult);
+
 private: 
     class ABlasterCharacter* Character;
 
-	UPROPERTY(Replicated)
+	UPROPERTY(ReplicatedUsing = OnRep_EquippedWeapon)
 	AWeapon* EquippedWeapon;
+
+	UPROPERTY(Replicated)
+	bool bAiming;
+
+	UPROPERTY(EditAnywhere)
+	float BaseWalkSpeed;
+
+	UPROPERTY(EditAnywhere)
+	float AimWalkSpeed;
+
+	bool bFireButtonPressed;
 
 public:	
 

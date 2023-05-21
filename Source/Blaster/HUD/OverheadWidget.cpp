@@ -38,11 +38,11 @@ void UOverheadWidget::ShowPlayerNetRole(APawn* InPawn)
 	}
 
 	FString LocalRoleString = FString::Printf(TEXT("Local role is : %s"), *Role);
-	SetDisplayText(LocalRoleString);
+	//SetDisplayText(LocalRoleString);
 
 	// Get Player Name / crash if same computer
 	LocalRoleString = InPawn->GetPlayerState()->GetPlayerName();
-	SetDisplayText(LocalRoleString);
+	//SetDisplayText(LocalRoleString);
 
 }
 

@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
+#include "Blaster/BlasterTypes/TurningInPlace.h"
 #include "BlasterCharacter.generated.h"
 
 UCLASS()
@@ -26,6 +27,8 @@ public:
 
 	virtual void PostInitializeComponents() override;
 
+	void PlayFireMontage(bool bAiming);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -38,6 +41,19 @@ protected:
 	void LookUp(float Value);
 
 	void EquipButtonPressed();
+
+	void CrouchButtonPressed();
+
+	void AimButtonPressed();
+
+	void AimButtonReleased();
+
+	void AimOffset(float DeltaTime);
+
+	virtual void Jump() override;
+
+	void FireButtonPressed();
+	void FireButtonReleased();
 
 
 private:	
@@ -64,9 +80,38 @@ private:
 	UFUNCTION(Server, Reliable)
 	void ServerEquipButtonPressed();
 
+	// Aim Offset
+	float AO_Yaw;
+
+	float AO_Pitch;
+
+	FRotator StartingAimRotation;
+
+	FRotator YawDeltaRotation;
+
+	ETurningInPlace TurningInPlace;
+
+	void TurnInPlace(float DeltaTime);
+
+	float InterpAO_Yaw;
+
+	UPROPERTY(EditAnywhere, Category = "Combat")
+	class UAnimMontage* FireWeaponMontage;
+
 public : 
     void SetOverlappingWeapon(AWeapon* Weapon);
 
 	bool IsWeaponEquipped();
+
+	bool IsAiming();
+
+	FORCEINLINE float GetAO_Yaw() const { return AO_Yaw;}
+
+	FORCEINLINE float GetAO_Pitch() const { return AO_Pitch;}
+
+	AWeapon* GetEquippedWeapon();
+
+	FORCEINLINE ETurningInPlace GetTurningInPlace() const { return TurningInPlace; }
+	
 
 };

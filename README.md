@@ -20,3 +20,10 @@ Every section is named same with the push title.
     - Startup level, where the player start and choose to host or join session.  
     - Lobby level, where player can move and interact with the level and other player while waiting other player to join.  
     - Multiplayer level, where player will start and play the game with other players.  
+
+## Section 2 Character, Locomotion, Combat and Weapon
+- Working on character movement equip or unequip
+- Adding aim offset for equip state
+- Creation of Weapon class and behaviour
+- Animation and special effects 
+
