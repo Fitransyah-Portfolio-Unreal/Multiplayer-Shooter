@@ -10,6 +10,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Casing.h"
 #include "Engine/SkeletalMeshSocket.h"
+#include "Kismet/KismetMathLibrary.h"
 
 AWeapon::AWeapon()
 {
