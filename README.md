@@ -27,3 +27,9 @@ Every section is named same with the push title.
 - Creation of Weapon class and behaviour
 - Animation and special effects 
 
+## Section 3 Projectiles
+- New weapon class derived from Weapon
+- Firing montage animation
+- Weapon firing effects, sounds.
+- Projectile movement
+- Bullet shells spawn and physics
